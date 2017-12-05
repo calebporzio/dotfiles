@@ -58,9 +58,12 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump composer jira npm osx yarn)
+plugins=(git composer jira npm osx yarn)
 
 source $ZSH/oh-my-zsh.sh
+
+# Autojump plugin
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # User configuration
 
