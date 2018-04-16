@@ -11,6 +11,12 @@ alias phpunit="vendor/bin/phpunit"
 
 alias camera='sudo killall VDCAssistant && sudo killall AppleCameraAssistant;'
 
+composer-link() {
+    composer config repositories.local '{"type": "path", "url": "'$1'"}' --file composer.json
+}
+
+alias refresh='source ~/.bash_profile'
+
 alias log='tail -n0 -f storage/logs/laravel.log'
 
 alias transfer='rsync -rzvvhP'
@@ -32,7 +38,7 @@ alias add="git add"
 alias addi="git add -i"
 alias branch="git branch"
 alias gco="git checkout"
-alias diff="git diff"
+alias gd="git diff --color | diff-so-fancy"
 alias diffs="git diff --staged"
 alias gs="git status"
 alias commit="git commit"

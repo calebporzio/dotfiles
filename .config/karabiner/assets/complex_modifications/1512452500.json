@@ -109,7 +109,7 @@
       ]
     },
     {
-      "description": "Change caps_lock to commandif pressed with other keys, to escape if pressed alone.",
+      "description": "Change caps_lock to command if pressed with other keys, to escape if pressed alone.",
       "manipulators": [
         {
           "type": "basic",
