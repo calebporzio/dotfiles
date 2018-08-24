@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 # Install additional composer dependencies as you would from the command line.
-echo "Installing Composer Dependencies"
 composer require calebporzio/laravel-frontend-preset
+
+# Install my front-end preset
 php artisan preset calebporzio
 npm install && node_modules/.bin/tailwind init && npm run dev
 touch database/database.sqlite
 
+# Use sqlite for database
 perlCommands=(
     "s/(DB_CONNECTION=)(.*)/\1sqlite/g"
     "s/(DB_DATABASE=)(.*)/\1database\/database.sqlite/g"
@@ -16,9 +18,11 @@ for perlCommand in "${perlCommands[@]}"; do
     perl -pi -e "$perlCommand" ".env"
 done
 
+# User in-memory sqlite for testing database.
 perl -pi -e "s/(<php>)(.*)/\1\n        <env name=\"DB_DATABASE\" value=\":memory:\"\/>/g" "phpunit.xml"
 perl -pi -e "s/(<php>)(.*)/\1\n        <env name=\"DB_CONNECTION\" value=\"sqlite\"\/>/g" "phpunit.xml"
 
+# Migrate database
 artisan migrate
 
 # To copy standard files to new lambo project place them in ~/.lambo/includes directory.
