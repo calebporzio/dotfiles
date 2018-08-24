@@ -15,6 +15,24 @@ composer-link() {
     composer config repositories.local '{"type": "path", "url": "'$1'"}' --file composer.json
 }
 
+git-cleanup() {
+    git remote prune origin --dry-run
+    read -p "Are you ready to prune these branches?" yn
+    case $yn in
+        [Yy]* ) git remote prune origin; break;;
+        [Nn]* ) kill -INT $$;;
+        * ) echo "Please answer yes or no.";;
+    esac
+}
+
+code-github() {
+    code --folder-uri remotehub://github.com/$1
+}
+
+alias ssh-key='cat ~/.ssh/id_rsa.pub | pbcopy'
+
+alias git-cleanup='git remote prune origin'
+
 alias refresh='source ~/.bash_profile'
 
 alias log='tail -n0 -f storage/logs/laravel.log'
@@ -22,6 +40,9 @@ alias log='tail -n0 -f storage/logs/laravel.log'
 alias transfer='rsync -rzvvhP'
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+alias mf='artisan migrate:fresh'
+alias mfs='artisan migrate:fresh --seed'
 
 alias camera="sudo killall VDCAssistant && sudo killall AppleCameraAssistant"
 alias sites="cd ~/Documents/Code/sites"
@@ -58,3 +79,5 @@ alias weather-tomorrow="curl -s wttr.in | sed -n '1,7p'"
 export PATH="/usr/local/sbin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export ANDROID_HOME=/usr/local/share/android-sdk
+export JAVA_HOME=/Library/Java/Home

@@ -100,3 +100,9 @@ prompt pure
 
 # ZSH Syntax Highlighting
 source /Users/calebporzio/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+###-tns-completion-start-###
+if [ -f /Users/calebporzio/.tnsrc ]; then 
+    source /Users/calebporzio/.tnsrc 
+fi
+###-tns-completion-end-###
