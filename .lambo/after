@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Install additional composer dependencies as you would from the command line.
+echo "Installing Composer Dependencies"
+composer require calebporzio/laravel-frontend-preset
+php artisan preset calebporzio
+npm install && node_modules/.bin/tailwind init && npm run dev
+touch database/database.sqlite
+
+perlCommands=(
+    "s/(DB_CONNECTION=)(.*)/\1sqlite/g"
+    "s/(DB_DATABASE=)(.*)/\1database\/database.sqlite/g"
+)
+
+for perlCommand in "${perlCommands[@]}"; do
+    perl -pi -e "$perlCommand" ".env"
+done
+
+perl -pi -e "s/(<php>)(.*)/\1\n        <env name=\"DB_DATABASE\" value=\":memory:\"\/>/g" "phpunit.xml"
+perl -pi -e "s/(<php>)(.*)/\1\n        <env name=\"DB_CONNECTION\" value=\"sqlite\"\/>/g" "phpunit.xml"
+
+artisan migrate
+
+# To copy standard files to new lambo project place them in ~/.lambo/includes directory.
+# echo "Copying Include Files"
+# cp -R ~/.lambo/includes/ $PROJECTPATH
+
+# To add a git commit after given modifications
+echo "Committing after modifications to Git"
+git add .
+git commit -am "Initialize Composer dependencies and additional files."
